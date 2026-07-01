@@ -11,6 +11,9 @@ interface Repo {
   forks_count: number;
   language: string | null;
   html_url: string;
+  owner: {
+    login: string;
+  };
 }
 
 interface RepoListProps {

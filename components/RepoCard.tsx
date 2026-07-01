@@ -1,3 +1,4 @@
+import Link from "next/link";
 interface RepoCardProps {
   repo: {
     id: number;
@@ -7,6 +8,9 @@ interface RepoCardProps {
     forks_count: number;
     language: string | null;
     html_url: string;
+    owner: {
+  login: string;
+};
   };
 }
 
@@ -27,7 +31,12 @@ export default function RepoCard({ repo }: RepoCardProps) {
         <span>🍴 {repo.forks_count}</span>
         <span>💻 {repo.language || "N/A"}</span>
       </div>
-
+<Link
+  href={`/repo/${repo.owner.login}/${repo.name}`}
+  className="block mt-5 bg-blue-600 text-white text-center py-2 rounded-lg"
+>
+  View Details
+</Link>
       <a
         href={repo.html_url}
         target="_blank"
