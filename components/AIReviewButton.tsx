@@ -12,47 +12,38 @@ export default function AIReviewButton({
 
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState<any>(null);
-
-
-  function handleReview() {
-
+async function handleReview() {
+  try {
     setLoading(true);
 
+    const response = await fetch("/api/review", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        repository,
+      }),
+    });
 
-    setTimeout(() => {
+    const data = await response.json();
 
-      setReview({
+if (!response.ok) {
+  alert(data.error || "AI Review Failed");
+  return;
+}
 
-        summary:
-          "This repository is a web application project focused on solving a specific problem.",
+const aiReview = JSON.parse(data.review);
 
-        strengths: [
-          "Clean project structure",
-          "Good use of modern technologies",
-          "Readable code"
-        ],
-
-        weaknesses: [
-          "Documentation can be improved",
-          "More testing can be added"
-        ],
-
-        suggestions: [
-          "Add better error handling",
-          "Improve code comments",
-          "Add CI/CD pipeline"
-        ],
-
-        rating: 8
-
-      });
-
-
-      setLoading(false);
-
-    }, 1500);
-
+setReview(aiReview);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to generate AI review.");
+  } finally {
+    setLoading(false);
   }
+
+}
 
 
   return (
@@ -91,7 +82,7 @@ export default function AIReviewButton({
             </h2>
 
             <ul className="list-disc ml-5 mt-2">
-              {review.strengths.map((item:string)=>(
+              {review.strengths.map((item: string) => (
                 <li key={item}>
                   {item}
                 </li>
@@ -108,7 +99,7 @@ export default function AIReviewButton({
             </h2>
 
             <ul className="list-disc ml-5 mt-2">
-              {review.weaknesses.map((item:string)=>(
+              {review.weaknesses.map((item: string) => (
                 <li key={item}>
                   {item}
                 </li>
@@ -125,7 +116,7 @@ export default function AIReviewButton({
             </h2>
 
             <ul className="list-disc ml-5 mt-2">
-              {review.suggestions.map((item:string)=>(
+              {review.suggestions.map((item: string) => (
                 <li key={item}>
                   {item}
                 </li>

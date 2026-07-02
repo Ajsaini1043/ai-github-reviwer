@@ -30,10 +30,6 @@
 - Dark Mode
 - Deploy
 
-Project: AI GitHub Reviewer
-Completed: Day 1 + Day 2
-Stack: Next.js 16 + TypeScript + Auth.js v5
-Current: Profile Card + Repo List + Search completed
 
 Hamara complete roadmap
 # ✅ Day 1 (Aaj) — Complete
